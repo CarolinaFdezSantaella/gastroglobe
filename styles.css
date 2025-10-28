@@ -1,51 +1,35 @@
 :root {
-  --bg: #0f0f11;
-  --card: #18181b;
-  --text: #f1f5f9;
-  --muted: #a1a1aa;
-  --accent: #22d3ee;
-  --border: #27272a;
-}
-body.light {
-  --bg: #f9fafb;
+  --bg: #fff8f8;
   --card: #ffffff;
-  --text: #18181b;
-  --muted: #52525b;
-  --border: #e4e4e7;
+  --text: #3a2e2e;
+  --muted: #7a6c6c;
+  --accent: #f4b6c2;
+  --accent-dark: #e29da8;
+  --border: #f1d5da;
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; }
 
 /* NAV */
 .nav {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1rem; border-bottom: 1px solid var(--border);
-  background: var(--bg); position: sticky; top: 0; z-index: 20;
+  background: var(--card); position: sticky; top: 0; z-index: 20;
 }
 .brand { display: flex; gap: .5rem; align-items: center; }
-.logo {
-  width: 28px; height: 28px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), #3b82f6);
-}
+.logo { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); }
 .navtabs { display: flex; gap: .5rem; }
-.tabBtn { background: none; border: none; padding: .5rem 1rem; cursor: pointer; color: var(--muted); font-weight: 600; border-radius: 8px; }
-.tabBtn.active { background: var(--accent); color: white; }
-.actions { display: flex; gap: .5rem; }
-.btn.ghost { background: none; border: 1px solid var(--border); padding: .5rem 1rem; color: var(--text); border-radius: 8px; cursor: pointer; }
-
-/* Filters */
-.filters { max-width: 1000px; margin: 1rem auto; padding: 0 1rem; display: flex; gap: .5rem; }
-.filters input, .filters select {
-  flex: 1;
-  padding: .6rem .8rem; border-radius: 8px; border: 1px solid var(--border);
-  background: var(--card); color: var(--text);
+.tabBtn {
+  background: none; border: none; padding: .5rem 1rem; cursor: pointer;
+  color: var(--muted); font-weight: 600; border-radius: 20px;
 }
+.tabBtn.active { background: var(--accent); color: white; }
 
-/* Cards */
+/* GRID */
 .grid {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 1rem auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
@@ -54,30 +38,59 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: system
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   transition: transform .2s ease;
 }
-.card:hover { transform: translateY(-3px); }
+.card:hover { transform: translateY(-4px); }
 .card img { width: 100%; height: 160px; object-fit: cover; }
 .card-body { padding: .8rem; display: flex; flex-direction: column; gap: .4rem; }
 .card-header { display: flex; justify-content: space-between; align-items: center; }
-.star { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #fbbf24; }
+.star { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #f7b801; }
 .star.active { color: #f59e0b; }
 
-/* Modal */
-.modal::backdrop { background: rgba(0,0,0,0.6); }
-.modal { border: none; border-radius: 12px; max-width: 800px; width: 90%; }
+/* MODAL */
+.modal::backdrop { background: rgba(0,0,0,0.5); }
+.modal { border: none; border-radius: 12px; max-width: 500px; width: 90%; }
 .modalContent { display: flex; flex-direction: column; }
-.modal video { width: 100%; height: 220px; background: black; }
+.modal img { width: 100%; height: 200px; object-fit: cover; }
 .modalInfo { padding: 1rem; }
-.modalClose { position: absolute; top: 10px; right: 10px; background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
+.modalClose { position: absolute; top: 10px; right: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 50%; cursor: pointer; width: 32px; height: 32px; }
+.btn.primary { background: var(--accent-dark); color: white; padding: .5rem 1rem; border-radius: 20px; text-decoration: none; text-align: center; display: inline-block; }
 
-/* Plan semanal */
-.plan { max-width: 800px; margin: 1rem auto; padding: 0; list-style: none; }
-.plan li { background: var(--card); border: 1px solid var(--border); margin: .5rem 0; padding: .8rem; border-radius: 8px; }
+/* TUTORIALES */
+.tutorials {
+  max-width: 1000px;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.tutorialCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.tutorialCard img { width: 100%; height: 160px; object-fit: cover; }
+.tutorialCard span { padding: .8rem; font-weight: 600; text-align: center; }
 
-/* Footer */
-.footer { text-align: center; padding: 1rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+/* TEXTOS */
+.sectionTitle {
+  max-width: 1000px;
+  margin: 1rem auto 0;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+}
+.muted { color: var(--muted); text-align: center; padding: 0 1rem; }
+
+.footer { text-align: center; padding: 1rem; color: var(--muted); font-size: .9rem; }
