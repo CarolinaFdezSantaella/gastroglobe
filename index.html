@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GastroGlobe Madrid</title>
   <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Guía dinámica para comer en Madrid: filtros por barrio y cocina, ordenación, mapa, Top personal y modo oscuro.">
+  <meta name="description" content="Guía dinámica para comer en Madrid: filtros por barrio y cocina, ordenación, mapa y modo oscuro.">
 </head>
 <body>
   <header class="nav">
@@ -15,9 +15,6 @@
     </div>
     <div class="actions">
       <button id="randomBtn" class="btn ghost">🎲 Sorpréndeme</button>
-      <button id="loadMoreBtn" class="btn ghost">➕ Cargar más (demo)</button>
-      <label class="btn ghost" for="fileInput" style="cursor:pointer">📥 Importar CSV/JSON</label>
-      <input id="fileInput" type="file" accept=".csv,.json" hidden>
       <button id="paletteBtn" class="btn ghost">🎨 Colores</button>
       <button id="themeToggle" class="btn ghost">🌙 Oscuro</button>
     </div>
@@ -34,7 +31,7 @@
 
     <div class="chips" id="chipCuisines"></div>
 
-    <!-- Chips de precio (nuevo) -->
+    <!-- Chips de precio -->
     <div class="chips" id="chipPrice">
       <button class="chip" data-price="1">€</button>
       <button class="chip" data-price="2">€€</button>
@@ -84,16 +81,15 @@
     </div>
   </section>
 
-  <!-- Mi TOP -->
-  <section class="topWrap">
+  <main class="grid" id="restaurantList"></main>
+
+  <!-- Mi TOP (por defecto oculto, solo aparece si marcas favoritos) -->
+  <section class="topWrap" id="topWrap" hidden>
     <div class="topHeader">
       <h2>⭐ Mi TOP Madrid</h2>
-      <small class="muted">(marca/desmarca la estrella en cada tarjeta)</small>
     </div>
     <div id="topList" class="topList"></div>
   </section>
-
-  <main class="grid" id="restaurantList"></main>
 
   <!-- Modal Detalle -->
   <dialog id="modal" class="modal">
