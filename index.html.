@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GastroGlobe 🌍🍽️</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>GastroGlobe</h1>
+    <button id="themeToggle">🌙 Oscuro</button>
+    <button id="randomBtn">🎲 Sorpréndeme</button>
+  </header>
+
+  <section class="filters">
+    <input type="text" id="searchInput" placeholder="Buscar restaurante...">
+    <select id="filterCuisine">
+      <option value="Todos">Todas las cocinas</option>
+    </select>
+    <select id="filterCountry">
+      <option value="Todos">Todos los países</option>
+    </select>
+  </section>
+
+  <main>
+    <div id="restaurantList" class="cards"></div>
+  </main>
+
+  <aside>
+    <h2>⭐ Wishlist</h2>
+    <ul id="wishlist"></ul>
+  </aside>
+
+  <footer>
+    <p>Hecho con ❤️ para tu entrega — HTML + CSS + JS</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
