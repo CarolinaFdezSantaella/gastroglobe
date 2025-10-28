@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GastroGlobe Madrid</title>
   <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Tu guía dinámica para comer en Madrid: filtros por barrio y cocina, ordenación, mapa y modo oscuro.">
+  <meta name="description" content="Guía dinámica para comer en Madrid: filtros por barrio y cocina, ordenación, mapa, Top personal y modo oscuro.">
 </head>
 <body>
   <header class="nav">
@@ -15,13 +15,34 @@
     </div>
     <div class="actions">
       <button id="randomBtn" class="btn ghost">🎲 Sorpréndeme</button>
+      <button id="loadMoreBtn" class="btn ghost">➕ Cargar más (demo)</button>
+      <label class="btn ghost" for="fileInput" style="cursor:pointer">📥 Importar CSV/JSON</label>
+      <input id="fileInput" type="file" accept=".csv,.json" hidden>
+      <button id="paletteBtn" class="btn ghost">🎨 Colores</button>
       <button id="themeToggle" class="btn ghost">🌙 Oscuro</button>
     </div>
   </header>
 
   <section class="filters">
-    <input type="text" id="searchInput" class="input" placeholder="Buscar por nombre, barrio, cocina…">
+    <div class="filtersTopRow">
+      <input type="text" id="searchInput" class="input" placeholder="Buscar por nombre, barrio, cocina…">
+      <div class="filtersRight">
+        <span id="resultCount" class="muted"></span>
+        <button id="clearBtn" class="btn ghost">🧹 Limpiar</button>
+      </div>
+    </div>
+
     <div class="chips" id="chipCuisines"></div>
+
+    <!-- Chips de precio (nuevo) -->
+    <div class="chips" id="chipPrice">
+      <button class="chip" data-price="1">€</button>
+      <button class="chip" data-price="2">€€</button>
+      <button class="chip" data-price="3">€€€</button>
+      <button class="chip" data-price="4">€€€€</button>
+      <button class="chip active" data-price="Todos">Todos</button>
+    </div>
+
     <div class="row">
       <label class="select">
         <span>🗺️ Barrio</span>
@@ -34,7 +55,7 @@
       <label class="select">
         <span>💶 Precio</span>
         <select id="selectPrecio">
-          <option value="Todos">Todos</option>
+          <option value="Todos" selected>Todos</option>
           <option value="1">€</option>
           <option value="2">€€</option>
           <option value="3">€€€</option>
@@ -63,6 +84,15 @@
     </div>
   </section>
 
+  <!-- Mi TOP -->
+  <section class="topWrap">
+    <div class="topHeader">
+      <h2>⭐ Mi TOP Madrid</h2>
+      <small class="muted">(marca/desmarca la estrella en cada tarjeta)</small>
+    </div>
+    <div id="topList" class="topList"></div>
+  </section>
+
   <main class="grid" id="restaurantList"></main>
 
   <!-- Modal Detalle -->
@@ -71,7 +101,7 @@
       <button class="modal__close" aria-label="Cerrar">✕</button>
       <div class="modal__body">
         <div class="modal__media">
-          <img id="mImg" alt="">
+          <img id="mImg" alt="" loading="lazy">
         </div>
         <div class="modal__info">
           <h3 id="mTitle"></h3>
