@@ -3,67 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PilatesFlow</title>
+  <title>Madrid Pilates Guide</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="nav">
     <div class="brand">
       <span class="logo"></span>
-      <h1>PilatesFlow</h1>
+      <h1>Madrid Pilates Guide</h1>
     </div>
     <nav class="navtabs">
-      <button class="tabBtn active" data-tab="main">🧘 Sesiones</button>
-      <button class="tabBtn" data-tab="favorites">⭐ Favoritos</button>
-      <button class="tabBtn" data-tab="schedule">📅 Mi Plan</button>
+      <button class="tabBtn active" data-tab="centros">🏢 Centros</button>
+      <button class="tabBtn" data-tab="tutoriales">📺 Tutoriales</button>
+      <button class="tabBtn" data-tab="favoritos">⭐ Mis favoritos</button>
     </nav>
-    <div class="actions">
-      <button id="themeToggle" class="btn ghost">🌙</button>
-    </div>
   </header>
 
-  <!-- TAB: SESIONES -->
-  <section id="mainTab" class="tabContent active">
-    <div class="filters">
-      <input type="text" id="searchInput" placeholder="Buscar sesiones de pilates...">
-      <select id="filterNivel">
-        <option value="Todos">Nivel</option>
-        <option value="Básico">Básico</option>
-        <option value="Intermedio">Intermedio</option>
-        <option value="Avanzado">Avanzado</option>
-      </select>
+  <!-- TAB CENTROS -->
+  <section id="centrosTab" class="tabContent active">
+    <h2 class="sectionTitle">🏢 Mejores centros de Pilates en Madrid</h2>
+    <div id="centrosList" class="grid"></div>
+  </section>
+
+  <!-- TAB TUTORIALES -->
+  <section id="tutorialesTab" class="tabContent">
+    <h2 class="sectionTitle">📺 Tutoriales para practicar en casa</h2>
+    <div class="tutorials">
+      <a href="https://www.youtube.com/watch?v=FpTrwTZ0R_A" target="_blank" class="tutorialCard">
+        <img src="https://img.youtube.com/vi/FpTrwTZ0R_A/0.jpg" alt="Tutorial 1">
+        <span>Sesión básica de Pilates</span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=d4lMALb9L7I" target="_blank" class="tutorialCard">
+        <img src="https://img.youtube.com/vi/d4lMALb9L7I/0.jpg" alt="Tutorial 2">
+        <span>Rutina para abdomen</span>
+      </a>
+      <a href="https://www.youtube.com/watch?v=6XJKu0ZzGpg" target="_blank" class="tutorialCard">
+        <img src="https://img.youtube.com/vi/6XJKu0ZzGpg/0.jpg" alt="Tutorial 3">
+        <span>Pilates para principiantes</span>
+      </a>
     </div>
-    <div id="sessionList" class="grid"></div>
   </section>
 
-  <!-- TAB: FAVORITOS -->
-  <section id="favoritesTab" class="tabContent">
-    <h2 class="sectionTitle">⭐ Mis sesiones favoritas</h2>
-    <div id="favoritesList" class="grid"></div>
-  </section>
-
-  <!-- TAB: PLAN -->
-  <section id="scheduleTab" class="tabContent">
-    <h2 class="sectionTitle">📅 Mi Plan Semanal</h2>
-    <ul id="planList" class="plan"></ul>
+  <!-- TAB FAVORITOS -->
+  <section id="favoritosTab" class="tabContent">
+    <h2 class="sectionTitle">⭐ Mis centros favoritos</h2>
+    <p class="muted">Aquí puedes ver los centros que más te gustan y tu valoración personal 🩷</p>
+    <div id="favoritosList" class="grid"></div>
   </section>
 
   <!-- MODAL -->
   <dialog id="modal" class="modal">
     <button class="modalClose" aria-label="Cerrar">✕</button>
     <div class="modalContent">
-      <video id="modalVideo" controls></video>
+      <img id="modalImg" alt="">
       <div class="modalInfo">
         <h3 id="modalTitle"></h3>
-        <p id="modalNivel"></p>
-        <p id="modalDesc"></p>
+        <p id="modalDireccion"></p>
+        <p id="modalValoracion"></p>
+        <a id="modalLink" href="#" target="_blank" class="btn primary">Visitar sitio</a>
       </div>
     </div>
   </dialog>
 
   <footer class="footer">
-    <p>PilatesFlow · Proyecto web dinámico · 2025</p>
+    <p>Madrid Pilates Guide · Proyecto web dinámica 🩷</p>
   </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
 
   <script src="script.js"></script>
 </body>
