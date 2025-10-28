@@ -1,0 +1,68 @@
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+}
+body.dark {
+  --bg: #121212;
+  --text: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card .info {
+  padding: 0.5rem 1rem;
+}
+
+.card button {
+  margin-top: 0.5rem;
+}
+
+aside {
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.dark header,
+.dark aside {
+  background-color: #1e1e1e;
+}
