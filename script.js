@@ -130,3 +130,137 @@ const chipCuisines = $("#chipCuisines");
 // Modal refs
 const modal = $("#modal");
 const mImg = $("#mImg");
+const mTitle = $("#mTitle");
+const mMeta = $("#mMeta");
+const mDesc = $("#mDesc");
+const mTags = $("#mTags");
+const mMap = $("#mMap");
+const mLink = $("#mLink");
+const mNote = $("#mNote");
+const mSaveNote = $("#mSaveNote");
+
+// --- Inicialización de filtros dinámicos ---
+const barrios = ["Todos", ...new Set(restaurants.map(r => r.barrio))];
+const cocinas = ["Todos", ...new Set(restaurants.map(r => r.cocina))];
+
+function fillSelect(el, items){
+  items.forEach(v=>{
+    const o=document.createElement("option");
+    o.value=v; o.textContent=v; el.appendChild(o);
+  });
+}
+fillSelect(selectBarrio, barrios);
+fillSelect(selectCocina, cocinas);
+
+// Chips de cocina destacadas
+cocinas.filter(c=>c!=="Todos").slice(0,6).forEach(c=>{
+  const b=document.createElement("button");
+  b.className="chip";
+  b.textContent=c;
+  b.addEventListener("click", ()=>{
+    // Toggle
+    const active = b.classList.toggle("active");
+    // Desactivar otros chips
+    $$(".chip").forEach(x=>{ if(x!==b) x.classList.remove("active"); });
+    // Aplicar al select
+    selectCocina.value = active ? c : "Todos";
+    render();
+  });
+  chipCuisines.appendChild(b);
+});
+
+// --- Render cards ---
+function render(){
+  listEl.innerHTML = "";
+
+  const q = (searchInput.value || "").toLowerCase();
+  const fBarrio = selectBarrio.value;
+  const fCocina = selectCocina.value;
+  const fPrecio = selectPrecio.value;
+  const fRating = Number(selectRating.value);
+  const sort = selectSort.value;
+
+  let items = restaurants.filter(r=>{
+    const matchesQ = [r.name, r.barrio, r.cocina].join(" ").toLowerCase().includes(q);
+    const okBarrio = (fBarrio==="Todos" || r.barrio===fBarrio);
+    const okCocina = (fCocina==="Todos" || r.cocina===fCocina);
+    const okPrecio = (fPrecio==="Todos" || r.priceLevel===Number(fPrecio));
+    const okRating = (r.rating >= fRating);
+    return matchesQ && okBarrio && okCocina && okPrecio && okRating;
+  });
+
+  if (sort==="rating") items.sort((a,b)=>b.rating - a.rating);
+  else if (sort==="precioAsc") items.sort((a,b)=>a.priceLevel - b.priceLevel);
+  else if (sort==="precioDesc") items.sort((a,b)=>b.priceLevel - a.priceLevel);
+  else if (sort==="az") items.sort((a,b)=>a.name.localeCompare(b.name));
+
+  if(items.length===0){
+    listEl.innerHTML = `<div class="muted">No hay resultados con esos filtros.</div>`;
+    return;
+  }
+
+  items.forEach(r=>{
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${r.img}" alt="${r.name}">
+      <div class="body">
+        <div class="title">${r.name}</div>
+        <div class="muted">${r.barrio} • ${r.cocina} • ${euro(r.priceLevel)} • ⭐ ${r.rating}</div>
+        <div class="tags">${r.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn primary">Ver detalles</button>
+          <a class="btn ghost" href="${r.url}" target="_blank" rel="noreferrer">Web</a>
+        </div>
+      </div>
+    `;
+    card.querySelector(".btn.primary").addEventListener("click", ()=>openModal(r));
+    listEl.appendChild(card);
+  });
+}
+
+// --- Modal ---
+let currentId = null;
+function openModal(r){
+  currentId = r.id;
+  mImg.src = r.img;
+  mImg.alt = r.name;
+  mTitle.textContent = r.name;
+  mMeta.textContent = `${r.barrio} • ${r.cocina} • ${euro(r.priceLevel)} • ⭐ ${r.rating}`;
+  mDesc.textContent = r.desc;
+  mTags.innerHTML = r.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+  const q = encodeURIComponent(`${r.lat},${r.lng}`);
+  mMap.src = `https://www.google.com/maps?q=${q}&hl=es&z=15&output=embed`;
+  mLink.href = r.url;
+  mNote.value = (notes[r.id] || "");
+  modal.showModal();
+}
+$(".modal__close").addEventListener("click", ()=>modal.close());
+mSaveNote.addEventListener("click", ()=>{
+  if(!currentId) return;
+  notes[currentId] = mNote.value.trim();
+  saveNotes(notes);
+  mSaveNote.textContent = "Guardado ✓";
+  setTimeout(()=> mSaveNote.textContent = "Guardar nota", 1200);
+});
+
+// --- Theme ---
+const themeToggle = $("#themeToggle");
+themeToggle.addEventListener("click", ()=>{
+  document.body.classList.toggle("light");
+  themeToggle.textContent = document.body.classList.contains("light") ? "🌙 Oscuro" : "☀️ Claro";
+});
+
+// --- Random ---
+$("#randomBtn").addEventListener("click", ()=>{
+  const pool = restaurants;
+  const r = pool[Math.floor(Math.random()*pool.length)];
+  openModal(r);
+});
+
+// --- Eventos ---
+searchInput.addEventListener("input", render);
+[selectBarrio, selectCocina, selectPrecio, selectRating, selectSort].forEach(el=> el.addEventListener("change", render));
+
+// --- Arranque ---
+render();
