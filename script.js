@@ -1,47 +1,42 @@
-// Sesiones de pilates iniciales
-const sessions = [
-  { id:"1", title:"Pilates Básico para Principiantes", nivel:"Básico", img:"https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=1000", desc:"Una sesión perfecta para quienes se inician en pilates.", video:"https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id:"2", title:"Pilates Intermedio – Core Fuerte", nivel:"Intermedio", img:"https://images.unsplash.com/photo-1594737625785-c0f3c9f5c4c7?q=80&w=1000", desc:"Fortalece abdomen y espalda con fluidez.", video:"https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id:"3", title:"Estiramientos Avanzados", nivel:"Avanzado", img:"https://images.unsplash.com/photo-1594737625785-c0f3c9f5c4c7?q=80&w=1000", desc:"Mejora la flexibilidad y control corporal.", video:"https://www.w3schools.com/html/mov_bbb.mp4" }
+// Lista de centros predeterminados
+const centros = [
+  { id:"1", nombre:"The Pilates Room", direccion:"Calle Serrano 45, Madrid", valoracion:4.8, img:"https://images.unsplash.com/photo-1594737625785-c0f3c9f5c4c7?q=80&w=1200", link:"https://www.thepilatesroommadrid.com" },
+  { id:"2", nombre:"Pilates Studio Madrid", direccion:"Calle Alcalá 120, Madrid", valoracion:4.6, img:"https://images.unsplash.com/photo-1571019613578-2b193e7d3d8d?q=80&w=1200", link:"https://www.pilatesstudiomadrid.com" },
+  { id:"3", nombre:"Pure Pilates", direccion:"Calle Goya 55, Madrid", valoracion:4.9, img:"https://images.unsplash.com/photo-1540206276207-3af25c08abc4?q=80&w=1200", link:"https://www.purepilatesmadrid.com" }
 ];
 
-let favoritos = JSON.parse(localStorage.getItem("favPilates") || "[]");
-let plan = JSON.parse(localStorage.getItem("planPilates") || "[]");
+let favoritos = JSON.parse(localStorage.getItem("pilatesFav") || "[]");
 
-const sessionList = document.getElementById("sessionList");
-const favoritesList = document.getElementById("favoritesList");
-const planList = document.getElementById("planList");
-const searchInput = document.getElementById("searchInput");
-const filterNivel = document.getElementById("filterNivel");
-
-// Modal
+// DOM
+const centrosList = document.getElementById("centrosList");
+const favoritosList = document.getElementById("favoritosList");
 const modal = document.getElementById("modal");
-const modalVideo = document.getElementById("modalVideo");
+const modalImg = document.getElementById("modalImg");
 const modalTitle = document.getElementById("modalTitle");
-const modalNivel = document.getElementById("modalNivel");
-const modalDesc = document.getElementById("modalDesc");
+const modalDireccion = document.getElementById("modalDireccion");
+const modalValoracion = document.getElementById("modalValoracion");
+const modalLink = document.getElementById("modalLink");
 
-// Render sesiones
-function renderSessions(list, container) {
+// Render centros
+function renderCentros(list, container) {
   container.innerHTML = "";
-  list.forEach(s => {
+  list.forEach(c => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      <img src="${s.img}" alt="${s.title}">
+      <img src="${c.img}" alt="${c.nombre}">
       <div class="card-body">
         <div class="card-header">
-          <h3>${s.title}</h3>
-          <button class="star ${favoritos.includes(s.id)?"active":""}" data-id="${s.id}">★</button>
+          <h3>${c.nombre}</h3>
+          <button class="star ${favoritos.includes(c.id)?"active":""}" data-id="${c.id}">★</button>
         </div>
-        <p>${s.nivel}</p>
-        <button class="btn ghost verDetalles">Ver sesión</button>
-        <button class="btn ghost añadirPlan">+ Añadir al plan</button>
+        <p>${c.direccion}</p>
+        <p>⭐ ${c.valoracion}</p>
+        <button class="btn primary verDetalles">Ver más</button>
       </div>
     `;
-    card.querySelector(".star").addEventListener("click",()=>toggleFavorito(s.id));
-    card.querySelector(".verDetalles").addEventListener("click",()=>abrirModal(s));
-    card.querySelector(".añadirPlan").addEventListener("click",()=>añadirAlPlan(s));
+    card.querySelector(".star").addEventListener("click",()=>toggleFavorito(c.id));
+    card.querySelector(".verDetalles").addEventListener("click",()=>abrirModal(c));
     container.appendChild(card);
   });
 }
@@ -52,48 +47,24 @@ function toggleFavorito(id) {
   } else {
     favoritos.push(id);
   }
-  localStorage.setItem("favPilates", JSON.stringify(favoritos));
-  aplicarFiltros();
+  localStorage.setItem("pilatesFav", JSON.stringify(favoritos));
+  renderCentros(centros, centrosList);
   renderFavoritos();
 }
 
-function renderFavoritos() {
-  const favs = sessions.filter(s => favoritos.includes(s.id));
-  renderSessions(favs, favoritesList);
-}
-
-function abrirModal(s) {
-  modalVideo.src = s.video;
-  modalTitle.textContent = s.title;
-  modalNivel.textContent = s.nivel;
-  modalDesc.textContent = s.desc;
+function abrirModal(c) {
+  modalImg.src = c.img;
+  modalTitle.textContent = c.nombre;
+  modalDireccion.textContent = c.direccion;
+  modalValoracion.textContent = `⭐ ${c.valoracion}`;
+  modalLink.href = c.link;
   modal.showModal();
 }
-document.querySelector(".modalClose").addEventListener("click", ()=> modal.close());
+document.querySelector(".modalClose").addEventListener("click",()=>modal.close());
 
-function añadirAlPlan(s) {
-  plan.push(s);
-  localStorage.setItem("planPilates", JSON.stringify(plan));
-  renderPlan();
-}
-
-function renderPlan() {
-  planList.innerHTML = "";
-  plan.forEach(p => {
-    const li = document.createElement("li");
-    li.textContent = `${p.title} – ${p.nivel}`;
-    planList.appendChild(li);
-  });
-}
-
-function aplicarFiltros() {
-  const q = searchInput.value.toLowerCase();
-  const nivel = filterNivel.value;
-  const filtradas = sessions.filter(s => 
-    (s.title.toLowerCase().includes(q) || s.nivel.toLowerCase().includes(q)) &&
-    (nivel === "Todos" || s.nivel === nivel)
-  );
-  renderSessions(filtradas, sessionList);
+function renderFavoritos() {
+  const favs = centros.filter(c => favoritos.includes(c.id));
+  renderCentros(favs, favoritosList);
 }
 
 // Tabs
@@ -106,21 +77,6 @@ document.querySelectorAll(".tabBtn").forEach(btn=>{
   });
 });
 
-// Tema claro / oscuro
-document.getElementById("themeToggle").addEventListener("click",()=>{
-  document.body.classList.toggle("light");
-});
-
-// Eventos
-searchInput.addEventListener("input", aplicarFiltros);
-filterNivel.addEventListener("change", aplicarFiltros);
-
 // Inicial
-aplicarFiltros();
-renderFavoritos();
-renderPlan();
-
-
-// === Inicial ===
-aplicarFiltros();
+renderCentros(centros, centrosList);
 renderFavoritos();
