@@ -2,39 +2,71 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GastroGlobe 🌍🍽️</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GastroGlobe · Madrid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>GastroGlobe</h1>
-    <button id="themeToggle">🌙 Oscuro</button>
-    <button id="randomBtn">🎲 Sorpréndeme</button>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🍽️</div>
+      <h1>GastroGlobe <span class="muted">Madrid</span></h1>
+    </div>
+    <div class="actions">
+      <button id="randomBtn" class="btn primary">🎲 Sorpréndeme</button>
+      <button id="themeToggle" class="btn">🌙 Oscuro</button>
+    </div>
   </header>
 
-  <section class="filters">
-    <input type="text" id="searchInput" placeholder="Buscar restaurante...">
-    <select id="filterCuisine">
+  <section class="toolbar">
+    <input id="searchInput" class="input" type="text" placeholder="Buscar por nombre, barrio, cocina, tags…" />
+    <select id="filterBarrio" class="input">
+      <option value="Todos">Todos los barrios</option>
+    </select>
+    <select id="filterCuisine" class="input">
       <option value="Todos">Todas las cocinas</option>
     </select>
-    <select id="filterCountry">
-      <option value="Todos">Todos los países</option>
+    <select id="filterPrice" class="input">
+      <option value="Todos">Todos los precios</option>
+      <option value="1">€</option><option value="2">€€</option><option value="3">€€€</option><option value="4">€€€€</option>
     </select>
+    <select id="filterRating" class="input">
+      <option value="0">Cualquier rating</option>
+      <option value="3">★ 3+</option>
+      <option value="4">★ 4+</option>
+      <option value="5">★ 5</option>
+    </select>
+    <select id="sortBy" class="input">
+      <option value="relevance">Orden: Relevancia</option>
+      <option value="rating">Mejor valorados</option>
+      <option value="priceAsc">Más baratos</option>
+      <option value="priceDesc">Más caros</option>
+      <option value="az">A–Z</option>
+    </select>
+    <span id="resultCount" class="counter">0 resultados</span>
   </section>
 
-  <main>
-    <div id="restaurantList" class="cards"></div>
+  <main class="layout">
+    <section class="grid" id="restaurantList"></section>
+
+    <aside class="sidebar">
+      <h2>Favoritos <span id="favCount" class="chip">0</span></h2>
+      <div id="favs" class="favs"></div>
+
+      <div class="panel">
+        <h3>Consejos de uso</h3>
+        <ul>
+          <li>Filtra por barrio/cocina y <b>ordena</b> resultados.</li>
+          <li>Guarda en <b>Favoritos</b> para tu ruta gastronómica.</li>
+          <li>Usa <b>🎲 Sorpréndeme</b> para una recomendación al azar.</li>
+          <li>Modo <b>oscuro</b> con un clic.</li>
+        </ul>
+      </div>
+    </aside>
   </main>
-
-  <aside>
-    <h2>⭐ Wishlist</h2>
-    <ul id="wishlist"></ul>
-  </aside>
-
-  <footer>
-    <p>Hecho con ❤️ para tu entrega — HTML + CSS + JS</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
