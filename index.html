@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GastroGlobe Madrid</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PilatesFlow</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="nav">
     <div class="brand">
       <span class="logo"></span>
-      <h1>GastroGlobe <small>Madrid</small></h1>
+      <h1>PilatesFlow</h1>
     </div>
     <nav class="navtabs">
-      <button class="tabBtn active" data-tab="main">🍽️ Restaurantes</button>
+      <button class="tabBtn active" data-tab="main">🧘 Sesiones</button>
       <button class="tabBtn" data-tab="favorites">⭐ Favoritos</button>
+      <button class="tabBtn" data-tab="schedule">📅 Mi Plan</button>
     </nav>
     <div class="actions">
-      <button id="themeToggle" class="btn ghost">🌙 Oscuro</button>
+      <button id="themeToggle" class="btn ghost">🌙</button>
     </div>
   </header>
 
-  <!-- Sección principal -->
+  <!-- TAB: SESIONES -->
   <section id="mainTab" class="tabContent active">
     <div class="filters">
-      <input type="text" id="searchInput" placeholder="Buscar restaurantes, barrios, cocinas..." />
-      <div class="filterRow">
-        <select id="filterBarrio"></select>
-        <select id="filterCocina"></select>
-        <select id="filterPrecio">
-          <option value="Todos">Precio</option>
-          <option value="1">€</option>
-          <option value="2">€€</option>
-          <option value="3">€€€</option>
-          <option value="4">€€€€</option>
-        </select>
-        <select id="filterValoracion">
-          <option value="0">Valoración</option>
-          <option value="3">3+</option>
-          <option value="4">4+</option>
-          <option value="5">5</option>
-        </select>
-      </div>
+      <input type="text" id="searchInput" placeholder="Buscar sesiones de pilates...">
+      <select id="filterNivel">
+        <option value="Todos">Nivel</option>
+        <option value="Básico">Básico</option>
+        <option value="Intermedio">Intermedio</option>
+        <option value="Avanzado">Avanzado</option>
+      </select>
     </div>
-    <div id="restaurantList" class="grid"></div>
+    <div id="sessionList" class="grid"></div>
   </section>
 
-  <!-- Sección de favoritos -->
+  <!-- TAB: FAVORITOS -->
   <section id="favoritesTab" class="tabContent">
-    <h2 class="sectionTitle">⭐ Mis restaurantes favoritos</h2>
+    <h2 class="sectionTitle">⭐ Mis sesiones favoritas</h2>
     <div id="favoritesList" class="grid"></div>
   </section>
 
-  <!-- Modal -->
+  <!-- TAB: PLAN -->
+  <section id="scheduleTab" class="tabContent">
+    <h2 class="sectionTitle">📅 Mi Plan Semanal</h2>
+    <ul id="planList" class="plan"></ul>
+  </section>
+
+  <!-- MODAL -->
   <dialog id="modal" class="modal">
     <button class="modalClose" aria-label="Cerrar">✕</button>
     <div class="modalContent">
-      <img id="modalImg" alt="">
+      <video id="modalVideo" controls></video>
       <div class="modalInfo">
         <h3 id="modalTitle"></h3>
-        <p id="modalMeta"></p>
+        <p id="modalNivel"></p>
         <p id="modalDesc"></p>
-        <iframe id="modalMap" loading="lazy" allowfullscreen></iframe>
       </div>
     </div>
   </dialog>
+
+  <footer class="footer">
+    <p>PilatesFlow · Proyecto web dinámico · 2025</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
